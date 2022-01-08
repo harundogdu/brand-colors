@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 const initialState = {
   selectedBrands: [],
   copied: false,
+  allBrands: [],
+  searchText: "",
 };
 
 export const brandsSlice = createSlice({
@@ -20,9 +21,19 @@ export const brandsSlice = createSlice({
     setCopied: (state, action) => {
       state.copied = action.payload;
     },
+    setAllBrands: (state, action) => {
+      const brandColors = action.payload;
+      Object.keys(brandColors).map((key) =>
+        state.allBrands.push(brandColors[key])
+      );
+    },
+    setSearchText: (state, action) => {
+      state.searchText = action.payload;
+    },
   },
 });
 
-export const { addSelectedBrand, setCopied } = brandsSlice.actions;
+export const { addSelectedBrand, setCopied, setAllBrands, setSearchText } =
+  brandsSlice.actions;
 
 export default brandsSlice.reducer;

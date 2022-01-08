@@ -1,27 +1,40 @@
-import React, { useState } from "react";
+import React, { useMemo } from "react";
 import brandColors from "assets/data/brandColors.json";
 import BrandCard from "./BrandCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LazyLoad from "react-lazyload";
 import Loader from "components/Loader";
+import { setAllBrands } from "redux/brands/brandsSlice";
 const ContentBody = () => {
-  const { selectedBrands } = useSelector((state) => state.brands);
-  let allBrandArray = [];
+  const dispatch = useDispatch();
+  const { allBrands, searchText } = useSelector(
+    (state) => state.brands
+  );
 
-  Object.keys(brandColors).map((key) => allBrandArray.push(brandColors[key]));
-
-  const [brands, setBrands] = useState(allBrandArray);
+  const filteredDatas = useMemo(() => {
+    if (searchText.length > 0) {
+      const filteredBrand = allBrands.filter((brand) =>
+        brand.title.toLowerCase().includes(searchText.toLowerCase())
+      );
+      return filteredBrand;
+    } else {
+      return allBrands;
+    }
+  }, [allBrands, searchText]);
 
   React.useEffect(() => {
-    if (selectedBrands) {
-      console.log(selectedBrands);
-    }
-  }, [selectedBrands]);
+    dispatch(setAllBrands(brandColors));
+  }, [dispatch]);
 
   return (
     <div className="content-body">
-      {brands.map((brand, index) => (
-        <LazyLoad key={index} once={true} overflow={true} placeholder={<Loader />}>
+      {filteredDatas.map((brand, index) => (
+        <LazyLoad
+          key={index}
+          once={true}
+          overflow={true}
+          placeholder={<Loader />}
+        >
           <BrandCard brand={brand} />
         </LazyLoad>
       ))}
