@@ -119,10 +119,17 @@ body,
       }
     }
     .content-body {
+      display: flex;
+      flex-direction: column;
       flex: 1;
+      overflow-x: hidden;
       .brand {
-        border-bottom: 1px solid #e0e0e0;
+        border: 1px solid #e0e0e0;
+        margin-bottom: 6px;
         padding: 25px 40px;
+        &.selected {
+          border: 1px solid red !important;
+        }
         .title {
           font-size: 20px;
           font-weight: 600;
@@ -132,7 +139,8 @@ body,
         .brand-color {
           display: flex;
           align-items: center;
-          column-gap: 10px; 
+          flex-wrap: wrap;
+          column-gap: 10px;
           .color {
             display: flex;
             align-items: center;
@@ -144,14 +152,32 @@ body,
             font-weight: 500;
             font-size: 18px;
             text-indent: -99999999px;
+            cursor: pointer;
+            &.selected {
+              text-indent: 0;
+              flex: 1;
+            }
           }
         }
       }
+    }
+    .copied{
+      position: absolute;
+      bottom: 10px;
+      right: 30px;
+      padding: 20px 40px;
+      font-size: 20px;
+      font-weight: 600;
+      background: var(--bgColor);
+      color: var(--textColor);
+      cursor: pointer;
+      z-index: 99999;
     }
   }
 }
 
 /* custom class */
+
 .about-modal {
   position: fixed;
   top: 50%;
