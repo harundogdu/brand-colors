@@ -124,22 +124,26 @@ body,
         border-bottom: 1px solid #e0e0e0;
         padding: 25px 40px;
         .title {
-          font-size: 18px;
-          font-weight: 500;
+          font-size: 20px;
+          font-weight: 600;
           color: rgba(0, 0, 0, 1);
+          cursor: pointer;
         }
         .brand-color {
           display: flex;
           align-items: center;
-          justify-content: center;
+          column-gap: 10px; 
           .color {
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 15px;
-            width: 100%;
+            width: 100px;
             height: 100%;
             margin-top: 10px;
+            font-weight: 500;
+            font-size: 18px;
+            text-indent: -99999999px;
           }
         }
       }
