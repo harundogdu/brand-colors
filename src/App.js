@@ -1,11 +1,15 @@
-import Content from "components/Content";
+import { Routes, Route } from "react-router-dom";
 import Sidebar from "components/Sidebar";
-
+import HomePage from "views/HomePage";
+import Collection from "views/Collection";
 function App() {
   return (
     <div className="app">
       <Sidebar />
-      <Content />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/collection/:slug" element={<Collection />} />
+      </Routes>
     </div>
   );
 }
