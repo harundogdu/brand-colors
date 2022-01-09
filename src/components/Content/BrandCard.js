@@ -26,25 +26,26 @@ const BrandCard = ({ brand }) => {
         {brand.title}
       </h6>
       <div className="brand-color">
-        {brand.colors.map((color, index) => {
-          return (
-            <Clipboard
-              component={"div"}
-              data-clipboard-text={color}
-              key={index}
-              className={`color ${
-                selectedBrands.includes(brand.slug) ? "selected" : ""
-              }`}
-              style={{
-                backgroundColor: `#${color}`,
-                color: getContrastYIQ(`${color}`),
-              }}
-              onClick={() => setColor(color)}
-            >
-              #{color}
-            </Clipboard>
-          );
-        })}
+        {Array.isArray(brand.colors) &&
+          brand.colors.map((color, index) => {
+            return (
+              <Clipboard
+                component={"div"}
+                data-clipboard-text={color}
+                key={index}
+                className={`color ${
+                  selectedBrands.includes(brand.slug) ? "selected" : ""
+                }`}
+                style={{
+                  backgroundColor: `#${color}`,
+                  color: getContrastYIQ(`${color}`),
+                }}
+                onClick={() => setColor(color)}
+              >
+                #{color}
+              </Clipboard>
+            );
+          })}
       </div>
     </div>
   );

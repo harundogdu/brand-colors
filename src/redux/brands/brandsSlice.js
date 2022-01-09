@@ -15,8 +15,15 @@ export const brandsSlice = createSlice({
       const { slug } = action.payload;
       if (selectedBrands.includes(slug)) {
         state.selectedBrands = selectedBrands.filter((brand) => brand !== slug);
+      } else {
+        selectedBrands.push(slug);
       }
-      selectedBrands.push(slug);
+    },
+    setSelectedBrand: (state, action) => {
+      state.selectedBrands = action.payload;
+    },
+    clearSelectedBrands: (state) => {
+      state.selectedBrands = [];
     },
     setCopied: (state, action) => {
       state.copied = action.payload;
@@ -33,7 +40,13 @@ export const brandsSlice = createSlice({
   },
 });
 
-export const { addSelectedBrand, setCopied, setAllBrands, setSearchText } =
-  brandsSlice.actions;
+export const {
+  addSelectedBrand,
+  setCopied,
+  setAllBrands,
+  setSearchText,
+  clearSelectedBrands,
+  setSelectedBrand,
+} = brandsSlice.actions;
 
 export default brandsSlice.reducer;

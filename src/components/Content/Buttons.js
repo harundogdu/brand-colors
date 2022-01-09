@@ -1,21 +1,17 @@
+/* eslint-disable array-callback-return */
 import React, { useState } from "react";
-import {
-  AiOutlineDownload,
-  AiOutlineLink,
-  AiOutlineClose,
-} from "react-icons/ai";
+import { AiOutlineDownload, AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
 import { clearSelectedBrands } from "redux/brands/brandsSlice";
 
 const Buttons = () => {
   const dispatch = useDispatch();
   const { selectedBrands, allBrands } = useSelector((state) => state.brands);
-  const [downloadType, setDownloadType] = React.useState("css");
-  const [downloadUrl, setDownloadUrl] = useState(null);
+  const [downloadType, setDownloadType] = React.useState("txt");
+  const [downloadUrl, setDownloadUrl] = useState("");
 
   React.useEffect(() => {
-    if (selectedBrands.length > 0) {
+    if (selectedBrands.length > 1) {
       let output = "";
       switch (downloadType) {
         case "scss":
@@ -48,15 +44,15 @@ const Buttons = () => {
           output += "}\n";
           break;
       }
-      const blob = new Blob([output], { type: "text/plain" });
+      const blob = new Blob([output]);
       const url = URL.createObjectURL(blob);
       setDownloadUrl(url);
       return () => {
         URL.revokeObjectURL(url);
-        setDownloadUrl(null);
+        setDownloadUrl("");
       };
     }
-  }, []);
+  }, [allBrands, downloadType, selectedBrands]);
 
   return (
     <div
@@ -70,6 +66,7 @@ const Buttons = () => {
           id="selected"
           className="select"
         >
+          <option value="txt">txt file</option>
           <option value="css">CSS</option>
           <option value="scss">SCSS</option>
           <option value="less">LESS</option>
@@ -82,12 +79,6 @@ const Buttons = () => {
           <AiOutlineDownload size={24} color="#000" />
         </a>
       </div>
-      <NavLink
-        to={`/collection/${selectedBrands.join(",")}`}
-        className={"btn-header"}
-      >
-        <AiOutlineLink size={24} color="#000" />
-      </NavLink>
       <button
         onClick={() => dispatch(clearSelectedBrands())}
         className="btn-header"
